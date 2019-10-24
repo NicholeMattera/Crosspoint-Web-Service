@@ -24,10 +24,12 @@ class ErrorResponse(JSONSerializableResponse):
 
 class InfoResponse(JSONSerializableResponse):
     def __init__(self, message: bytes):
+        msg_str = message.decode('ascii')
+
         # Example: `V12X08 A12X08`
-        if (len(message) == 15):
-            video=message[1:6]
-            audio=message[8:13]
+        if (len(msg_str) == 15):
+            video=msg_str[1:6]
+            audio=msg_str[8:13]
 
             self.video_inputs = int(video[0:2])
             self.video_outputs = int(video[3:5])
@@ -41,17 +43,19 @@ class InfoResponse(JSONSerializableResponse):
 
 class TieResponse(JSONSerializableResponse):
     def __init__(self, message: bytes, output: int = 0):
+        msg_str = message.decode('ascii')
+
         # Example: `Out03 In01 All`
-        if message.startswith(b'Out'):
-            self.input = int(message[9:11])
-            self.output = int(message[3:5])
+        if msg_str.startswith('Out'):
+            self.input = int(msg_str[9:11])
+            self.output = int(msg_str[3:5])
         # Example: `In05 All`
-        elif message.startswith(b'In'):
-            self.input = int(message[2:4])
+        elif msg_str.startswith('In'):
+            self.input = int(msg_str[2:4])
             self.output = 0
         # Example: `12`
-        elif len(input) == 4:
-            self.input = int(input)
+        elif len(msg_str) == 4:
+            self.input = int(msg_str)
             self.output = output
         else:
             self.input = 0

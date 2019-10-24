@@ -3,10 +3,8 @@
 # Copyright (C) 2019 Nichole Mattera
 #
 
-from flask import Flask, Blueprint
+from flask import Flask
+from app.routes import api_v1_bp
 
 app = Flask(__name__)
-
-api_v1_bp = Blueprint('api_v1', __name__)
-from app import routes
 app.register_blueprint(api_v1_bp, url_prefix='/api/v1')
