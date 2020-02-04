@@ -3,9 +3,9 @@
 # Copyright (C) 2020 Nichole Mattera
 #
 
-from flask import Blueprint
 from app.views.info_view import InfoView
 from app.views.tie_view import TieView, TieIDView
+from flask import Blueprint
 
 api_v1_bp = Blueprint('api_v1', __name__)
 api_v1_bp.add_url_rule('/info', view_func=InfoView.as_view('info_view'))

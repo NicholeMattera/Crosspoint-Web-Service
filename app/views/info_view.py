@@ -3,10 +3,10 @@
 # Copyright (C) 2020 Nichole Mattera
 #
 
-import serial
 from app.views.serial_method_view import SerialMethodView
 from app.models.serial_requests import infoRequest
 from app.models.responses import ErrorResponse, InfoResponse
+import serial
 
 class InfoView(SerialMethodView):
     def get(self):

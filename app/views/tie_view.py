@@ -3,15 +3,16 @@
 # Copyright (C) 2020 Nichole Mattera
 #
 
-import serial
-from flask import request
+from app.config import config
 from app.views.serial_method_view import SerialMethodView
 from app.models.serial_requests import createTie, getTie
 from app.models.responses import ErrorResponse, TieResponse
+from flask import request
+import serial
 
 class TieIDView(SerialMethodView):
     def get(self, output):
-        if output < 1 or output > 8:
+        if output < 1 or output > config['totalNumberOfOutputs']:
             return ErrorResponse(4, 'Output field is out of range.').response(500)
         
         try:
@@ -22,7 +23,7 @@ class TieIDView(SerialMethodView):
             return ErrorResponse(0, 'Device not available.').response(500)
 
     def delete(self, output):
-        if output < 1 or output > 8:
+        if output < 1 or output > config['totalNumberOfOutputs']:
             return Error(4, 'Output field is out of range.').response(500)
 
         try:
@@ -40,9 +41,9 @@ class TieView(SerialMethodView):
             return Error(1, 'Input field is required.').response(500)
         if 'output' not in data:
             return Error(2, 'Output field is required.').response(500)
-        if data['input'] < 1 or data['input'] > 12:
+        if data['input'] < 1 or data['input'] > config['totalNumberOfInputs']:
             return Error(3, 'Input field is out of range.').response(500)
-        if data['output'] < 1 or data['output'] > 8:
+        if data['output'] < 1 or data['output'] > config['totalNumberOfOutputs']:
             return Error(4, 'Output field is out of range.').response(500)
 
         try:

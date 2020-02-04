@@ -3,8 +3,8 @@
 # Copyright (C) 2020 Nichole Mattera
 #
 
-import json
 from flask import Response
+import json
 
 class JSONSerializableResponse:
     def jsonEncode(self):

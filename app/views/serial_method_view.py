@@ -3,16 +3,17 @@
 # Copyright (C) 2020 Nichole Mattera
 #
 
-import serial
+from app.config import config
 from flask.views import MethodView
+import serial
 
 class SerialMethodView(MethodView):
     def connect(self):
         return serial.Serial(
-            '/dev/ttyUSB0',
-            baudrate=9600,
-            bytesize=serial.EIGHTBITS,
-            parity=serial.PARITY_NONE,
-            stopbits=serial.STOPBITS_ONE,
-            timeout=10
+            config['device'],
+            baudrate=config['baudrate'],
+            bytesize=config['bytesize'],
+            parity=config['parity'],
+            stopbits=config['stopbits'],
+            timeout=config['timeout']
         )
